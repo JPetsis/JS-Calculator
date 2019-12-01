@@ -26,16 +26,78 @@ updateDisplayVal = (e) => {
   displayResult.innerText = displayVal;
 }
 
+// Mathematical operations
 
+performOperation = (e) => {
+  var operator = e.target.innerText;
+
+  switch (operator) {
+  case '+':
+    pendingVal = displayVal;
+    displayVal = '0';
+    displayResult.innerText = displayVal;
+    evalStringArray.push(pendingVal);
+    evalStringArray.push('+');
+    break;
+  case '-':
+    pendingVal = displayVal;
+    displayVal = '0';
+    displayResult.innerText = displayVal;
+    evalStringArray.push(pendingVal);
+    evalStringArray.push('-');
+    break;
+  case '×':
+    pendingVal = displayVal;
+    displayVal = '0';
+    displayResult.innerText = displayVal;
+    evalStringArray.push(pendingVal);
+    evalStringArray.push('*');
+    break;
+  case '÷':
+    pendingVal = displayVal;
+    displayVal = '0';
+    displayResult.innerText = displayVal;
+    evalStringArray.push(pendingVal);
+    evalStringArray.push('/');
+    break;
+  case '=':
+    evalStringArray.push(displayVal);
+    var evaluation = eval(evalStringArray.join(''));
+    displayVal = evaluation + '';
+    displayResult.innerText = displayVal;
+    evalStringArray = [];
+    break;
+  default:
+    break;
+  }
+}
 
 
 
 // Add event listeners to buttons
 
 for (let i = 0; i < btnNumbers.length; i++) {
-  btnNumbers[i].addEventListener('click', //function)
+  btnNumbers[i].addEventListener('click', updateDisplayVal)
 }
 
 for (let i = 0; i < btnOperators.length; i++) {
-  btnOperators[i].addEventListener('click', //function);
+  btnOperators[i].addEventListener('click', performOperation);
+}
+
+// Clear button
+
+clear.onclick = () => {
+  displayVal = '0';
+  pendingVal = undefined;
+  evalStringArray = [];
+  displayResult.innerHTML = displayVal;
+}
+
+// Decimal point
+
+decimal.onclick = () => {
+  if(!displayVal.includes('.')) {
+    displayVal += '.';
+  }
+  displayResult.innerText = displayVal;
 }
